@@ -12,7 +12,6 @@ print_help() {
 
 is_positive() {
   local number=$1
-  echo $1
   if [ $number -gt 0 ]; then
     return 0
   else
@@ -30,12 +29,20 @@ while getopts 'l:w:h' opt; do
       width=$OPTARG
       # echo "Processing option 'w' with '${OPTARG}' argument"
       ;;
-    ?|h)
+    *)
       print_help
       exit 1
       ;;
   esac
 done
+
+if [ -z "$length" ]; then
+  length=$LENGTH_ENV
+fi
+
+if [ -z "$width" ]; then
+  width=$WIDTH_ENV
+fi
 
 if [ -z "$length" ]; then
   echo -e "error: length was not specified"
